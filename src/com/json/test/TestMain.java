@@ -18,6 +18,37 @@ public class TestMain {
 
 
     public static void main(String[] args) {
-        final IParamResolveEngine paramResolveEngine = new ParamResolveEngineImpl();
+
+        TestMain testMain = new TestMain();
+        testMain.testExecuteResolveExpress();
+
+        testMain.testExecuteReplacePramExpress();
     }
+
+
+    /**
+     *
+     */
+    private void testExecuteResolveExpress() {
+        final IParamResolveEngine paramResolveEngine = new ParamResolveEngineImpl();
+        String json = "{\"itemId\":\"1152083490\",\"frontObject\":{\"frontCategoryList\":[{\"frontCategoryId\":1631,\"relationSort\":3}],\"frontField\":\"value\"}}";
+        //表达式必须以$符号开头，其中表达式必须指定到最后一级
+        String express = "$frontObject.frontCategoryList[0].relationSort";
+        System.out.println(paramResolveEngine.executeResolveExpress(json, express));
+
+    }
+
+
+    /**
+     *
+     */
+    private void testExecuteReplacePramExpress() {
+        final IParamResolveEngine paramResolveEngine = new ParamResolveEngineImpl();
+        String json = "{\"itemId\":\"1152083490\",\"frontObject\":{\"frontCategoryList\":[{\"frontCategoryId\":1631,\"relationSort\":3}],\"frontField\":\"value\"}}";
+        //表达式必须以$符号开头，其中表达式必须指定到最后一级;
+        String express = "$frontObject.frontCategoryList[0].relationSort";
+        //将targetValue=6666666   的值替换json对象中的表达式对应的变量具体值，并返回替换之后的json字符串
+        System.out.println(paramResolveEngine.executeReplacePramExpress(json, express, "6666666"));
+    }
+
 }
